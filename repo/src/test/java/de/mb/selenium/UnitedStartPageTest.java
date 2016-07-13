@@ -59,7 +59,7 @@ public class UnitedStartPageTest {
 	@Test
 	public void pageTitleIsNotNull() throws MalformedURLException {
 		WebElement element = driver.findElement(By.name("q"));
-		element.sendKeys("Sataras!");
+		element.sendKeys("Sveji sir!");
 		element.submit();
 
         // if (driver instanceof JavascriptExecutor) {
@@ -83,7 +83,7 @@ public class UnitedStartPageTest {
 	@Test
 	public void pageTitleContainsGoogle() throws MalformedURLException {
 		WebElement element = driver.findElement(By.name("q"));
-		element.sendKeys("Sataras!");
+		element.sendKeys("Smokva!");
 		element.submit();
 		assertTrue(driver.getTitle().contains("Google"));
 	}

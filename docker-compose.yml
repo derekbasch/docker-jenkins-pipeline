@@ -14,7 +14,7 @@ services:
 
  jenkins:
   # build: ./jenkins
-  image: derekbasch/jenkins-pipeline
+  image: derekbasch/docker-jenkins-pipeline
   ports:
     - "8080:8080"
   networks:
