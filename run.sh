@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/local/bin/jetty.sh &
+# /usr/local/bin/jetty.sh &
 
 # TODO --informative-errors does not seem to be available in this version of Git
 git daemon --verbose --enable=receive-pack --base-path=/tmp/files --export-all &
