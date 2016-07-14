@@ -7,16 +7,6 @@ ENV MAVEN_VERSION 3.3.9
 RUN cd /usr/local; wget -O - http://mirrors.ibiblio.org/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xvzf -
 RUN ln -sv /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven
 
-# # install Jetty
-# WORKDIR /opt
-# # jetty package is still 8
-# ENV JETTY_VERSION 9.2.12.v20150709
-# RUN wget -O - "http://archive.eclipse.org/jetty/$JETTY_VERSION/dist/jetty-distribution-$JETTY_VERSION.tar.gz" | tar xvfz -
-# RUN ln -sv jetty-distribution-$JETTY_VERSION jetty
-# RUN cd /tmp; ln -s /opt/jetty/webapps
-# RUN chown -R jenkins /opt/jetty/logs
-# RUN chown -R jenkins /opt/jetty/webapps
-
 WORKDIR /tmp/files
 
 # Prepare local Maven repo. Note that $JENKINS_HOME is a volume so we cannot populate it now.
@@ -27,7 +17,6 @@ ADD repo repo-wc
 RUN chown -R jenkins.jenkins .
 USER jenkins
 RUN echo '<settings><mirrors><mirror><id>central</id><url>http://repo.jenkins-ci.org/simple/repo1-cache/</url><mirrorOf>central</mirrorOf></mirror></mirrors><localRepository>/usr/share/jenkins/ref/.m2/repository</localRepository></settings>' > settings.xml
-# RUN /usr/local/maven/bin/mvn -s settings.xml -f repo-wc install && \
 RUN /usr/local/maven/bin/mvn -X -s settings.xml -f repo-wc -Dmaven.test.failure.ignore clean install
 
 COPY plugins.txt .
@@ -54,11 +43,7 @@ ADD JENKINS_HOME /usr/share/jenkins/ref
 
 USER root
 RUN chown -R jenkins.jenkins /usr/share/jenkins/ref
-# COPY run.sh jetty.sh /usr/local/bin/
 COPY run.sh /usr/local/bin/
-
-# RUN chmod a+x /usr/local/bin/run.sh /usr/local/bin/jetty.sh
-
 RUN chmod a+x /usr/local/bin/run.sh
 
 USER jenkins
